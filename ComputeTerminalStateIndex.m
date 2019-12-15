@@ -1,5 +1,5 @@
 function stateIndex = ComputeTerminalStateIndex(stateSpace, map)
-%ComputeTerminalStateIndex Compute the index of the terminal state in the
+%ComputeTerminalStateIndex Compute the index of the terminal state and starting state in the
 %stateSpace matrix
 %
 %   stateIndex = ComputeTerminalStateIndex(stateSpace, map)
@@ -15,8 +15,8 @@ function stateIndex = ComputeTerminalStateIndex(stateSpace, map)
 %
 %   Output arguments:
 %
-%       stateIndex:
-%           An integer that is the index of the terminal state in the
+%       stateIndex (1 X 2): [TERMINAL_STATE_INDEX, STARTING_STATE_INDEX]
+%           An integer that is the index of the terminal state and starting state in the
 %           stateSpace matrix
 
     global DROP_OFF BASE 
@@ -34,7 +34,7 @@ function stateIndex = ComputeTerminalStateIndex(stateSpace, map)
             stateIndex(2) = i;
             flag = flag + 1;
         end
-        if flag == 3
+        if flag == 2
             return
         end
     end

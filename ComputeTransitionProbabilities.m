@@ -16,6 +16,11 @@ function [P,G] = ComputeTransitionProbabilities(stateSpace, map, map_index)
 %           A (M x N)-matrix describing the world. With
 %           values: FREE TREE SHOOTER PICK_UP DROP_OFF BASE
 %
+%       map_index:
+%           A (M x N)-matrix describing mapping relation between position in map
+%           and index i without package in stateSpace, thus the relevant
+%           index with package in stateSpace is i+1.
+%
 %   Output arguments:
 %
 %       P:

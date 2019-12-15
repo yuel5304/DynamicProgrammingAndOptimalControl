@@ -37,7 +37,6 @@ global NORTH SOUTH EAST WEST HOVER
 % Do yo need to do something with the teminal state before starting policy
 % iteration?
 global TERMINAL_STATE_INDEX
-global u
 % IMPORTANT: You can use the global variable TERMINAL_STATE_INDEX computed
 % in the ComputeTerminalStateIndex.m file (see main.m)
 J = zeros(K,1);
