@@ -58,7 +58,7 @@ for i = 1:K
     end
     u{i} = utmp;
 end
-
+u{}
 while ~convergence
     for i = 1:K
         if i ~= TERMINAL_STATE_INDEX

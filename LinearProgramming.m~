@@ -49,7 +49,7 @@ u_opt_ind = zeros(K,1);
 nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
 for i = 1:K
     if i ~= TERMINAL_STATE_INDEX
-        for l=u{i} 
+        for l = 1:u{i} 
             A = [A;eye(K,K)-P(:,:,l)];
             B= [B;G(:,l)];
         end
@@ -57,15 +57,14 @@ for i = 1:K
 
 end
 is_Inf = find(B==Inf);
-is_Inf
-is_Inf = find(A==Inf);
-is_Inf
-% J_opt = linprog(f,A,B);
-% %size(J_opt)
-% %size(squeeze(P1(1,:,:)))
-% for k = 1:K
-%     [~,u_opt_ind(k)] = min ( G(k,:) + J_opt' * squeeze(P(k,:,:)));
-% end
+A(is_Inf,:) = 0;
+B(is_Inf) = 0;
+J_opt = linprog(f,A,B);
+%size(J_opt)
+%size(squeeze(P1(1,:,:)))
+for k = 1:K
+    [~,u_opt_ind(k)] = min ( G(k,:) + J_opt' * squeeze(P(k,:,:)));
+end
 
 end
 
