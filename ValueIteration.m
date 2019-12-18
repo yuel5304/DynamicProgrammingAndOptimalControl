@@ -44,6 +44,7 @@ J_opt = J;
 convergence = false;
 J_new = J;
 nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
+err_tol = 1e-3;
 while ~convergence
     for i = 1:K
         if i ~= TERMINAL_STATE_INDEX
@@ -59,7 +60,7 @@ while ~convergence
         end
     end
     J = J_new;
-    if sum(abs(J_opt-J)) == 0
+    if sum(abs(J_opt-J)) <= err_tol
         
         convergence = true;
     end

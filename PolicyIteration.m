@@ -44,7 +44,7 @@ J_opt = J;
 u_opt_ind = ones(K,1);
 u_new = u_opt_ind;
 convergence = false;
-err_tol = 1e-6;
+err_tol = 1e-3;
 nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
 %initialize the valid input for each state
 for i = 1:K
