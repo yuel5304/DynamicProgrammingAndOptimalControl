@@ -28,12 +28,12 @@ clc;
 %% Options
 % [M, N]
 global row col
-row = 15;
-col = 20;
+row = 40;
+col = 40;
 mapSize = [row, col];
 % Set to true to generate a random map of size mapSize, else set to false
 % to load the pre-exsisting example map
-generateRandomWorld = false;
+generateRandomWorld = true;
 
 % Plotting options
 global PLOT_POLICY PLOT_COST
@@ -102,9 +102,9 @@ K=size(stateSpace,1);
 %% Set the following to true as you progress with the files
 transitionProbabilitiesImplemented = true;
 stageCostsImplemented = true;
-valueIterationImplemented = true;
+valueIterationImplemented = false;
 policyIterationImplemented = true;
-linearProgrammingImplemented = true;
+linearProgrammingImplemented = false;
 
 %% Compute the terminal state index
 global TERMINAL_STATE_INDEX

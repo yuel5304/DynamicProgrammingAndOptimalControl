@@ -39,46 +39,47 @@ global NORTH SOUTH EAST WEST HOVER
 global TERMINAL_STATE_INDEX
 % IMPORTANT: You can use the global variable TERMINAL_STATE_INDEX computed
 % in the ComputeTerminalStateIndex.m file (see main.m)
-J = zeros(K,1);
+J = ones(K,1);
 J_opt = J;
-u_opt_ind = ones(K,1);
-u_new = u_opt_ind;
-convergence = false;
-err_tol = 1e-3;
-nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
-%initialize the valid input for each state
-for i = 1:K
-    utmp = [];
-    for input = [NORTH SOUTH EAST WEST HOVER]
-        if G(i,input)~= inf
-            u_opt_ind(i) = input;
-            utmp = [utmp,input];
-        end
-    end
-    u{i} = utmp;
-end
+J_opt(TERMINAL_STATE_INDEX) = 0;
+u_opt_ind = ones(K,1)*HOVER;
 
+convergence = false;
+err_tol = 1e-5;
+nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
+
+u_opt_ind = bfs(P);
 while ~convergence
-    for i = 1:K
+    Pi = eye(K,K);
+    Gi = eye(K,1);
+    for i=1:K
         if i ~= TERMINAL_STATE_INDEX
-            J(i) = G(i,u_opt_ind(i)) + P(i,nonTERMINAL,u_opt_ind(i))*J_opt(nonTERMINAL);%the cost assoicated with current input series.
+            Pi(i,:) = squeeze(P(i,:,u_opt_ind(i)));
+            Gi(i) = G(i,u_opt_ind(i));
         end
     end
+  
+    %get the converged cost for current policy
+    %det(eye(K-1,K-1)-Pi(nonTERMINAL,nonTERMINAL))
+    J(nonTERMINAL) = inv(eye(K-1,K-1)-Pi(nonTERMINAL,nonTERMINAL))*Gi(nonTERMINAL);
+    %update current policy
     for i = 1:K
-        input = u{i};
-        Pi = reshape(P(i,:,input),K,length(input));
-        Gi = reshape(G(i,input),length(input),1);
-        tmp = Gi+Pi'*J;
-        [min_value, index] = min(tmp,[],1);
-        u_opt_ind(i) = input(index);
+          if i ~= TERMINAL_STATE_INDEX 
+            
+            Pi = squeeze(P(i,:,:));
+            Gi = G(i,:);    
+            tmp = Gi+J'*Pi;         
+            [min_value, u_opt_ind(i)] = min(tmp);
+      
+          end              
     end
-        
     
-    if max(abs(J_opt-J)) <= err_tol
+    if max(max((abs(J-J_opt)))) <= err_tol
         convergence = true;
     end
     J_opt = J;
+    
+    
+end
 end
 
-
-end

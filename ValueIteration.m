@@ -36,54 +36,34 @@ global K L HOVER
 % iteration ? we shouldn't take the terminal state into value iteration
 % consider.
 global TERMINAL_STATE_INDEX
+global NORTH SOUTH EAST WEST HOVER 
 % IMPORTANT: You can use the global variable TERMINAL_STATE_INDEX computed
 % in the ComputeTerminalStateIndex.m file (see main.m)
-tmp = zeros(K);
-J = tmp(:,1);
+
+J = zeros(K,1);
 J_opt = J;
 convergence = false;
-J_new = J;
 nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
-err_tol = 1e-3;
+err_tol = 1e-5;
+u_opt_ind = ones(K,1)*HOVER;
+
+%initialize the valid input for each state (is it a proper policy?)
+
 while ~convergence
+    
     for i = 1:K
         if i ~= TERMINAL_STATE_INDEX
-            min = G(i,1) + P(i,nonTERMINAL,1)*J(nonTERMINAL);
-            for u = 2:L
-                tmp = G(i,u) + P(i,nonTERMINAL,u)*J(nonTERMINAL);
-                if min > tmp
-                    min = tmp;
-                  
-                end
-            end
-            J_new(i) = min;
+            %input = u{i};
+            [J(i),u_opt_ind(i)] = min(+G(i,:) + J_opt(nonTERMINAL)'*squeeze(P(i,nonTERMINAL,:)),[],2);
         end
     end
-    J = J_new;
-    if sum(abs(J_opt-J)) <= err_tol
-        
+
+    if max(abs(J_opt-J),[],1) <= err_tol
         convergence = true;
     end
     J_opt = J;
 end
 %get the convergent cost value
-J_opt = J;
-%calculate out the optimal input out of the convergent optimal cost.
-tmp = zeros(K);
-u_opt_ind = tmp(:,1);
-for i = 1:K
-    if i ~= TERMINAL_STATE_INDEX
-        min = G(i,1) + P(i,:,1)*J_opt;
-        for u = 2:L
-            tmp = G(i,u) + P(i,:,u)*J;
-            if min > tmp
-                min = tmp;
-                u_opt_ind(i) = u;
-            end
-        end
-    end
-end
-        
-
+%disp('iterations = ', iter)
 
 end
