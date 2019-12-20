@@ -81,5 +81,6 @@ while ~convergence
     
     
 end
+J_opt(TERMINAL_STATE_INDEX) = 0;
 end
 
