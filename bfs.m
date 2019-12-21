@@ -1,5 +1,5 @@
 function u = bfs(P)
-%BFS finds one proper policy 
+%BFS finds one proper policy  
 
 global K L TERMINAL_STATE_INDEX STARTING_STATE_INDEX 
 global NORTH SOUTH EAST WEST HOVER 
