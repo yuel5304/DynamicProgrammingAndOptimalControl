@@ -1,5 +1,5 @@
 function P = shoot(x,y,map)
-%   shooted by angry resident
+%   probability being shooted by angry resident
 %   Input arguments:
 %
 %       x,y:

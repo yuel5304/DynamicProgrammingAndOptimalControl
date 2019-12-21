@@ -47,7 +47,7 @@ u_opt_ind = ones(K,1)*HOVER;
 convergence = false;
 err_tol = 1e-5;
 nonTERMINAL = [1:TERMINAL_STATE_INDEX-1 TERMINAL_STATE_INDEX+1:K];
-
+%get a proper initializaiton
 u_opt_ind = bfs(P);
 while ~convergence
     Pi = eye(K,K);

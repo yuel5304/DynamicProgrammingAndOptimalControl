@@ -28,8 +28,8 @@ clc;
 %% Options
 % [M, N]
 global row col
-row = 40;
-col = 40;
+row = 15;
+col = 20;
 mapSize = [row, col];
 % Set to true to generate a random map of size mapSize, else set to false
 % to load the pre-exsisting example map
@@ -102,9 +102,9 @@ K=size(stateSpace,1);
 %% Set the following to true as you progress with the files
 transitionProbabilitiesImplemented = true;
 stageCostsImplemented = true;
-valueIterationImplemented = false;
+valueIterationImplemented = true;
 policyIterationImplemented = true;
-linearProgrammingImplemented = false;
+linearProgrammingImplemented = true;
 
 %% Compute the terminal state index
 global TERMINAL_STATE_INDEX
